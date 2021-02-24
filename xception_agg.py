@@ -230,7 +230,7 @@ def Xception(img_rows, img_cols, channel, num_class):
     model = Model(input_img, x, name='xception_agg')
 
     model.compile(loss=keras.losses.categorical_crossentropy,
-                  optimizer=keras.optimizers.Adam(lr=0.00001, decay=0.00001), metrics=['accuracy'])
+                  optimizer=keras.optimizers.Adam(lr=0.00001, decay=0.000001), metrics=['accuracy'])
     return model
 
 
