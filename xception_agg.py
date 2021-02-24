@@ -221,37 +221,19 @@ def Xception(img_rows, img_cols, channel, num_class):
     x = Activation('relu')(x)
 
     x = GlobalAveragePooling2D(name='globave')(x)
-    #x = keras.layers.concatenate([x, x_concat], axis=-1)  #0
-    #x = layers.add([x, x_concat])
-    #x = keras.layers.Dropout(0.5)(x)
+    x = keras.layers.concatenate([x, x_concat], axis=-1)  #0
     x = Dense(2048, activation='relu', kernel_regularizer=l2(0.0001))(x)
-    #x = layers.add([x, x_concat])
-    x = keras.layers.concatenate([x, x_concat], axis=-1)        #1
-    x = keras.layers.Dropout(1)(x)                       #1
+    x = keras.layers.Dropout(0.7)(x)                       #1
     x = Dense(1024, activation='relu', kernel_regularizer=l2(0.0001))(x)
-    x = keras.layers.Dropout(1)(x)
-    x = Dense(512, activation='relu', kernel_regularizer=l2(0.0001))(x)
-    #x = BatchNormalization()(x)  #0
-    x = keras.layers.Dropout(1)(x)
+    x = keras.layers.Dropout(0.5)(x)
     x = Dense(num_class,kernel_initializer='he_normal',activation='softmax')(x)
     model = Model(input_img, x, name='xception_agg')
 
     model.compile(loss=keras.losses.categorical_crossentropy,
                   optimizer=keras.optimizers.Adam(lr=0.00001, decay=0.00001), metrics=['accuracy'])
     return model
-    '''
-    itializer='he_normal', activation='sigmoid')(x)
-
-    # create model
-    model = Model(input_img, x, name='xception')
-
-    model.compile(loss='binary_crossentropy', optimizer=keras.optimizers.Adam(lr=0.00002, decay=0.00001),
-                  metrics=['accuracy'])
-
-    return model
 
 
-'''
 
 
 
